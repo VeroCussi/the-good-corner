@@ -1,0 +1,42 @@
+GET http://localhost:4000/ads
+
+
+###
+
+POST http://localhost:4000/ads
+Content-Type: application/json
+
+{
+      "title": "22 New stuff cool with ORM",
+      "description":
+        "My car is blue, working fine. I'm selling it because I've got a new one",
+      "owner": "car.seller@gmail.com",
+      "price": 10000,
+      "picture":
+        "https://www.automobile-magazine.fr/asset/cms/34973/config/28294/apres-plusieurs-prototypes-la-bollore-bluecar-a-fini-par-devoiler-sa-version-definitive.jpg",
+      "location": "Marseille",
+      "createdAt": "2023-10-05T10:14:15.922Z",
+      "category": 1,
+      "tags":1
+    }
+
+###
+
+DELETE http://localhost:4000/ads/3
+
+
+###
+
+PUT http://localhost:4000/ads/3
+Content-Type: application/json
+
+{
+    "id": 3,
+    "title": "Gaming PC pas chère",
+    "description": "High-performance gaming PC with RTX 3080, 32GB RAM, and 1TB SSD.",
+    "owner": "gamer123@gmail.com",
+    "price": 1500,
+    "picture": "https://example.com/pc.jpg",
+    "location": "Lyon",
+    "createdAt": "2023-09-07T17:45:20.000Z"
+    }

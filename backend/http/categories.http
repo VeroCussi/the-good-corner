@@ -1,0 +1,14 @@
+GET http://localhost:4000/categories/
+
+
+###
+
+
+POST http://localhost:4000/categories/
+Content-Type: application/json
+
+{
+      "name": "Vehicles",
+      "description":
+        "Pretty obvius, right?"
+    }
