@@ -55,7 +55,7 @@ h1 {
   justify-content: center;
   align-items: center;
   gap: 3px;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: bold;
   color: #ffa41b;
   background-color: white;
@@ -163,6 +163,36 @@ h1 {
   gap: 12px;
   justify-content: left;
   align-items: flex-center;
+  max-width: 400px;
+  margin: auto;
+}
+
+.form label {
+  display: block;
+  margin-bottom: 0.8rem;
+  color: #222;
+  font-weight: bold;
+  text-align: left;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+  display: block;
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.2rem;
+  border: 2px solid #f4a300;
+  border-radius: 8px;
+  background-color: #f0f7ff;
+  font-size: 1rem;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: #f79e00;
+  box-shadow: 0 0 0 2px rgba(247, 158, 0, 0.3);
 }
  
 @media screen and (min-width: 720px) {

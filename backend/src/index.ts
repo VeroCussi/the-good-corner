@@ -60,8 +60,20 @@ app.post("/ads", async (req, res) => {
   ad.picture = req.body.picture;
   ad.location = req.body.location;
   ad.createdAt = req.body.createdAt;
-  ad.category = req.body.category;
-  ad.tags = req.body.tags;
+  if (req.body.categoryId) {
+    const category = await Category.findOneBy({ id: req.body.categoryId });
+    if (category) {
+      ad.category = category;
+    }
+  }
+  
+  if (req.body.tagsId) {
+    const tags = await Tags.findOneBy({ id: req.body.tagsId });
+    if (tags) {
+      ad.tags = tags;
+    }
+  }
+  
 
   await ad.save();
 
