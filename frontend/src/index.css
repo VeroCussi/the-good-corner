@@ -156,6 +156,14 @@ h1 {
   display: grid;
   gap: 24px;
 }
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: left;
+  align-items: flex-center;
+}
  
 @media screen and (min-width: 720px) {
   .mobile-short-label {

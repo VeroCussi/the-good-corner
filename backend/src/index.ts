@@ -1,182 +1,3 @@
-// import express from "express";
-// import sqlite3 from 'sqlite3';
-// import dataSource from "./config/db";
-// import "reflect-metadata";
-// import { Ad } from "./entities/Ad";
-// import { Category } from "./entities/Category";
-
-
-// const db = new sqlite3.Database('good_corner.sqlite');
-
-
-// const app = express();
-// const port = 4000;
-
-// app.use(express.json())
-
-
-// // app.get("/ads", (_req, res) => {
-// //   db.all("SELECT * FROM ad", (err, rows) => {
-// //     res.send(rows);
-// //   })
-    
-// // })
-
-// // app.get("/ads", (_req, res) => {
-// //   db.all("SELECT * FROM ad", (err, rows) => {
-// //     if (err) {
-// //       console.error(err);
-// //       res.status(500).send("An error occurred");
-// //     } else {
-// //       res.send(rows);
-// //     }
-// //   });
-// // });
-
-// // post con codigo bdd directamente
-// // app.post("/ads", (req, res) => {
-// //     const stmt = db.prepare(`INSERT INTO ad (title, description, owner, price, picture, location, createdAt)
-// //       VALUES (?, ?, ?, ?, ?, ?, ?)`);
-// //       stmt.run([
-// //         req.body.title,
-// //         req.body.description,
-// //         req.body.owner,
-// //         req.body.price,
-// //         req.body.picture,
-// //         req.body.location,
-// //         req.body.createdAt,
-// //       ], (err) => {
-// //         if (err){
-// //           res.status(500).send(err);
-// //         } else {
-// //           res.status(201).json({ message: "Ad successfully created" });
-// //         }
-// //       })
-// //   });
-// app.get("/ads", async (req, res) => {
-//   try {
-//     const ads = await Ad.find();
-//     res.send(ads);
-//   } catch (error) {
-//     console.error("Error al obtener anuncios:", error);
-//     res.status(500).send({ message: "Error al obtener los anuncios" });
-//   }
-// });
-
-// // GET para obtener un anuncio específico por ID
-// // app.get("/ads/:id", async (req, res) => {
-// //   try {
-// //     const id = parseInt(req.params.id);
-// //     const ad = await Ad.findOneBy({ id });
-    
-// //     if (!ad) {
-// //       return res.status(404).send({ message: "Anuncio no encontrado" });
-// //     }
-    
-// //     res.send(ad);
-// //   } catch (error) {
-// //     console.error("Error al obtener el anuncio:", error);
-// //     res.status(500).send({ message: "Error al obtener el anuncio" });
-// //   }
-// // });
-
-
-// // post con orm
-// app.post("/ads", async (req, res) => {
-//   const ad = new Ad ();
-//   ad.title = req.body.title;
-//   ad.description = req.body.description;
-//   ad.owner = req.body.owner;
-//   ad.price = req.body.price;
-//   ad.picture = req.body.picture;
-//   ad.location = req.body.location;
-//   ad.createdAt = req.body.createdAt;
-
-//   await ad.save();
-
-//   res.send(ad);
-// });
-
-// app.put("/ads/:id", async (req, res) => {
-//   const id = parseInt(req.params.id);
-//   const ad = await Ad.findOneBy({ id })
-//   if (ad !== null) {
-//     ad.title = req.body.title;
-//     ad.description = req.body.description;
-//     ad.owner = req.body.owner;
-//     ad.price = req.body.price;
-//     ad.picture = req.body.picture;
-//     ad.location = req.body.location;
-//     ad.createdAt = req.body.createdAt;
-
-//     ad.save();
-//   }
-//   res.send(ad);
-// });
-
-// app.delete("/ads/:id", async (req, res) => {
-//   Ad.delete({id: Number.parseInt(req.params.id)})
-//   await res.send("Ad has been remove")
-// });
-
-
-// //   app.delete("/ads/:id", (req, res) => {
-// //     const stmt = db.prepare("DELETE FROM AD WHERE ID=?");
-// //     stmt.run([req.params.id], (err) => {
-// //         if (err) {
-// //             res.status(500).send(err);
-// //         } else {
-// //             res.send("ad has been deleted");
-// //         }
-// //     });
-// // });
-
-// // app.put("/ads/:id", (req, res) => {
-// //   const stmt = db.prepare("UPDATE ad SET title=?, description=?, owner=?, price=?, picture=?, location=?, createdAt=? WHERE id=?");
-
-// //   stmt.run([
-// //       req.body.title,
-// //       req.body.description,
-// //       req.body.owner,
-// //       req.body.price,
-// //       req.body.picture,
-// //       req.body.location,
-// //       req.body.createdAt,
-// //       req.params.id
-// //   ], (err) => {
-// //       if (err) {
-// //           res.status(500).send(err);
-// //       } else {
-// //           res.send("Ad has been updated");
-// //       }
-// //   });
-
-// //   stmt.finalize(); // Cierra la consulta para liberar recursos
-// // });
-
-// /*
-
-  
-// app.put("/ads/:id", (req, res) => {
-//     console.log(req.params.id);
-//     console.log(req.body.id);
-//     ads = ads.map((ad) => {
-//         if(Number.parseInt(req.params.id) === ad.id) {
-//             return req.body;
-//         } else{
-//             return ad;
-//         }
-//     })
-//     res.send("ads updated")
-// }
-// )
-// */
-
-// app.listen(port, async () => {
-//   console.log(`Example app listening on port ${port}`);
-//   await dataSource.initialize();
-// });
-
 import express from "express";
 //import sqlite3 from 'sqlite3';
 import "reflect-metadata";
@@ -184,6 +5,7 @@ import dataSource from "./config/db";
 import { Ad } from "./entities/Ad";
 import { Category } from "./entities/Category";
 import { Tags } from "./entities/Tags";
+import cors from "cors";
 
 const app = express();
 const port = 4000;
@@ -191,6 +13,7 @@ const port = 4000;
 //const db = new sqlite3.Database('good_corner.sqlite');
 
 // Middleware
+app.use(cors());
 app.use(express.json());
 
 // GET all ads

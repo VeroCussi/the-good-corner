@@ -32,7 +32,7 @@ import {
     @Column()
     location: string;
   
-    @Column()
+    @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
     createdAt: Date;
   
     // Relación: Muchos anuncios pueden pertenecer a una categoría

@@ -7,7 +7,7 @@ POST http://localhost:4000/ads
 Content-Type: application/json
 
 {
-      "title": "22 New stuff cool with ORM",
+      "title": "22 New stuff cool with front-end",
       "description":
         "My car is blue, working fine. I'm selling it because I've got a new one",
       "owner": "car.seller@gmail.com",
