@@ -8,7 +8,6 @@ POST http://localhost:4000/categories/
 Content-Type: application/json
 
 {
-      "name": "Vehicles",
-      "description":
-        "Pretty obvius, right?"
-    }
+    "name": "Vacation",
+    "description": "Holiday rentals, trips, and travel services."
+  }

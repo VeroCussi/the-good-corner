@@ -5,6 +5,7 @@ import { Layout } from './pages/Layout'
 import { About } from './pages/About'
 import { AdDetails } from './components/AdDetails'
 import { NewAdForm } from './pages/NewAdForm'
+import { CategoryPage } from './pages/CategoryPage'
 
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -19,6 +20,7 @@ function App() {
         <Route path="about" element={<About />} />
         <Route path="ad/:id" element={<AdDetails />} />
         <Route path="ad/new" element={<NewAdForm />} />
+        <Route path="/category/:id" element={<CategoryPage />} />
       </Route>
     </Routes>
     <ToastContainer 

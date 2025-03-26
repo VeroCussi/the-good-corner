@@ -1,6 +1,29 @@
 import { Link } from 'react-router';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+
+type Category = {
+  id: number;
+  name: string;
+};
 
 export const Header = () => {
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await axios.get<Category[]>("http://localhost:4000/categories");
+        setCategories(res.data);
+      } catch (error) {
+        console.error("Erreur lors du chargement des catégories");
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+
   return (
     <header className="header">
       <div className="main-menu">
@@ -38,7 +61,7 @@ export const Header = () => {
         </Link>
       </div>
 
-      <nav className="categories-navigation">
+      {/* <nav className="categories-navigation">
         <Link to="/category/ameublement" className="category-navigation-link">Ameublement</Link> •
         <Link to="/category/electromenager" className="category-navigation-link">Électroménager</Link> •
         <Link to="/category/photographie" className="category-navigation-link">Photographie</Link> •
@@ -52,7 +75,20 @@ export const Header = () => {
         <Link to="/category/outillage" className="category-navigation-link">Outillage</Link> •
         <Link to="/category/services" className="category-navigation-link">Services</Link> •
         <Link to="/category/vacances" className="category-navigation-link">Vacances</Link>
+      </nav> */}
+
+        {/* Navegación por categorías */}
+      <nav className="categories-navigation">
+        {categories.map((category, index) => (
+          <span key={category.id}>
+            <Link to={`/category/${category.id}`} className="category-navigation-link">
+              {category.name}
+            </Link>
+            {index < categories.length - 1 && " • "}
+          </span>
+        ))}
       </nav>
+
     </header>
   );
 };
