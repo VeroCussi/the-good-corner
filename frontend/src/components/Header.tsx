@@ -55,6 +55,14 @@ export const Header = () => {
           <span className="mobile-short-label">Publier</span>
           <span className="desktop-long-label">Publier une annonce</span>
         </Link>
+        <Link to="/category/new" className="button link-button">
+          <span className="mobile-short-label">Publier</span>
+          <span className="desktop-long-label">Publier une cat</span>
+        </Link>
+        <Link to="/tags/new" className="button link-button">
+          <span className="mobile-short-label">Publier</span>
+          <span className="desktop-long-label">Publier une tag</span>
+        </Link>
       </div>
 
       {/* <nav className="categories-navigation">
