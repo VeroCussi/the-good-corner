@@ -1,11 +1,7 @@
 import { Link } from 'react-router';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-
-type Category = {
-  id: number;
-  name: string;
-};
+import { Category } from '../types';
 
 export const Header = () => {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -13,8 +9,8 @@ export const Header = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await axios.get<Category[]>("http://localhost:4000/categories");
-        setCategories(res.data);
+        const result = await axios.get<Category[]>("http://localhost:4000/categories");
+        setCategories(result.data);
       } catch (error) {
         console.error("Erreur lors du chargement des catégories");
       }

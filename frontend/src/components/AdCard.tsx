@@ -1,10 +1,4 @@
-type AdCardProps = {
-    id: string,
-    title: string,
-    picture: string,
-    price: number, 
-    link: string
-};
+import { AdCardProps } from "../types";
 
 
 export const AdCard = ({ title, picture, price, link}: AdCardProps) => {

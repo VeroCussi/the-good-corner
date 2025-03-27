@@ -2,13 +2,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-
-type Ad = {
-  id: number;
-  title: string;
-  price: number;
-  picture: string;
-};
+import { Ad } from "../types";
 
 export const CategoryPage = () => {
   const { id } = useParams();

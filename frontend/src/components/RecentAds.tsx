@@ -3,14 +3,7 @@ import { useEffect, useState } from "react";
 import { AdCard } from "./AdCard"
 import axios from "axios";
 import { toast } from 'react-toastify';
-
-
-type AdCardProps = {
-    title: string;
-    picture: string;
-    price: number;
-    link: string;
-  };
+import { AdCardProps } from "../types";
 
 export const RecentAds = () => {
   const [total, setTotal] = useState(0);

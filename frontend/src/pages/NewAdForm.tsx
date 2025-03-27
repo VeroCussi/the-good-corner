@@ -100,13 +100,10 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from 'react-toastify';
+import { Category } from "../types";
 
-interface Category {
-  id: number;
-  name: string
-};
 
-interface FormValues {
+type FormValues = {
   title: string;
   description: string;
   owner: string;
