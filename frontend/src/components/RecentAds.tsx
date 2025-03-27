@@ -27,14 +27,14 @@ export const RecentAds = () => {
       <h2>Annonces récentes</h2>
       <p>Total: {total} €</p>
       <section className="recent-ads">
-      {ads.map((ad, index) => (
-        <div key={index}>
+      {ads.map( ad => (
+        <div key={ad.id}>
           <AdCard
-            id={`ad-${index}`}
+            id={ad.id}
             title={ad.title}
             picture={ad.picture}
             price={ad.price}
-            link={ad.link}
+            link={`/ad/${ad.id}`}
           />
           <button 
           className="button"

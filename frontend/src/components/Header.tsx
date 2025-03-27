@@ -57,11 +57,11 @@ export const Header = () => {
         </Link>
         <Link to="/category/new" className="button link-button">
           <span className="mobile-short-label">Publier</span>
-          <span className="desktop-long-label">Publier une cat</span>
+          <span className="desktop-long-label">Créer une catégorie</span>
         </Link>
         <Link to="/tags/new" className="button link-button">
           <span className="mobile-short-label">Publier</span>
-          <span className="desktop-long-label">Publier une tag</span>
+          <span className="desktop-long-label">Créer un tag</span>
         </Link>
       </div>
 

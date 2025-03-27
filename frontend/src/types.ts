@@ -11,7 +11,7 @@ export type Ad = {
   };
 
 export type AdCardProps = {
-    id: string,
+    id: number,
     title: string,
     picture: string,
     price: number, 

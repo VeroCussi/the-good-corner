@@ -27,6 +27,15 @@ app.get("/ads", async (req, res) => {
   }
 });
 
+// GET ad by Id
+app.get("/ads/:id", async (req, res) => {
+  const ad = await Ad.findOne({
+    where: { id: parseInt(req.params.id) },
+    relations: ['category', 'tags'],
+  });
+  res.json(ad);
+});
+
 // GET all categories
 app.get("/categories", async (req, res) => {
   try {

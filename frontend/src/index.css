@@ -120,6 +120,8 @@ h1 {
   border: 1px solid lightgray;
   color: inherit;
   background-color: white;
+  padding: 12px;  
+  margin-bottom: 12px;
 }
  
 .ad-card-link {
@@ -128,7 +130,9 @@ h1 {
 }
  
 .ad-card-image {
+  max-width: 400px;
   width: 100%;
+  height: auto;
   border-radius: 8px;
 }
  
@@ -136,7 +140,9 @@ h1 {
   padding: 12px;
   font-size: 18px;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
+  gap: 12px;
 }
  
 .ad-card-title {
