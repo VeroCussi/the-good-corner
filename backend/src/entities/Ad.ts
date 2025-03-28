@@ -3,8 +3,10 @@ import {
     Column,
     Entity,
     ManyToOne,
+    ManyToMany,
     PrimaryGeneratedColumn,
-    JoinColumn
+    JoinColumn,
+    JoinTable
   } from "typeorm";
   import { Category } from "./Category";
   import { Tags } from "./Tags";
@@ -44,13 +46,18 @@ import {
     @Column({ nullable: true })
     categoryId: number;
 
-    // Relación: Muchos anuncios pueden pertenecer a un TAG
-    @ManyToOne(() => Tags, tags => tags.ads, { eager: true })
-    @JoinColumn({ name: 'tagsId' })
-    tags: Tags;
+    // // Relación: Muchos anuncios pueden pertenecer a un TAG
+    // @ManyToOne(() => Tags, tags => tags.ads, { eager: true })
+    // @JoinColumn({ name: 'tagsId' })
+    // tags: Tags;
   
-    // Columna para almacenar el ID de la tag
-    @Column({ nullable: true })
-    tagsId: number;
+    // // Columna para almacenar el ID de la tag
+    // @Column({ nullable: true })
+    // tagsId: number;
+
+    @ManyToMany(() => Tags, { eager: true })
+    @JoinTable()
+    tags: Tags[];
+
 
   }

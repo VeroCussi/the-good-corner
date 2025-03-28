@@ -2,6 +2,7 @@ import express from "express";
 //import sqlite3 from 'sqlite3';
 import "reflect-metadata";
 import dataSource from "./config/db";
+import { Like, In, FindOptionsWhere, FindManyOptions, ILike } from "typeorm";
 import { Ad } from "./entities/Ad";
 import { Category } from "./entities/Category";
 import { Tags } from "./entities/Tags";
@@ -24,6 +25,27 @@ app.get("/ads", async (req, res) => {
   } catch (error) {
     console.error("Error fetching ads:", error);
     res.status(500).json({ message: "Failed to retrieve ads" });
+  }
+});
+
+// GET ads by search query
+app.get("/ads/search", async (req, res) => {
+  
+  const query = req.query.query?.toString().toLowerCase();
+
+  try {
+    const results = await Ad.find({
+      where: [
+        { title: Like(`%${query}%`) },
+        { description: Like(`%${query}%`) },
+      ],
+      relations: ["category", "tags"],
+    });
+
+    res.json(results);
+  } catch (error) {
+    console.error("Erreur de recherche :", error);
+    res.status(500).json({ message: "Erreur de recherche" });
   }
 });
 
@@ -76,13 +98,18 @@ app.post("/ads", async (req, res) => {
     }
   }
   
+  // actualizado para que recibe array de tags
   if (req.body.tagsId) {
-    const tags = await Tags.findOneBy({ id: req.body.tagsId });
-    if (tags) {
-      ad.tags = tags;
-    }
-  }
+    const tagIds = Array.isArray(req.body.tagsId)
+      ? req.body.tagsId
+      : [req.body.tagsId]; 
   
+    const tags = await Tags.find({
+      where: { id: In(tagIds) },
+    });
+  
+    ad.tags = tags;
+  }
 
   await ad.save();
 

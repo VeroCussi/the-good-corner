@@ -1,10 +1,13 @@
 import { Link } from 'react-router';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 import { Category } from '../types';
 
 export const Header = () => {
   const [categories, setCategories] = useState<Category[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -19,6 +22,12 @@ export const Header = () => {
     fetchCategories();
   }, []);
 
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchTerm.trim() === "") return;
+    navigate(`/search?query=${encodeURIComponent(searchTerm)}`);
+  };
+
 
   return (
     <header className="header">
@@ -30,8 +39,14 @@ export const Header = () => {
           </Link>
         </h1>
 
-        <form className="text-field-with-button">
-          <input className="text-field main-search-field" type="search" />
+        <form className="text-field-with-button" onSubmit={handleSearch}>
+          <input
+            className="text-field main-search-field"
+            type="search"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Rechercher..."
+          />
           <button className="button button-primary">
             {/* SVG del icono de búsqueda */}
             <svg

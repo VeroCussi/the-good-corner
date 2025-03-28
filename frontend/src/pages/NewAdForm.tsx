@@ -1,99 +1,3 @@
-// import axios from "axios";
-// import { useEffect, useState } from "react";
-
-// type Category = {
-//   id: number;
-//   name: string;
-// };
-
-// export const NewAdForm = () => {
-//   const [categories, setCategories] = useState<Category[]>([]);
-
-//   useEffect(() => {
-//     const fetchCategories = async () => {
-//       try {
-//         const result = await axios.get<Category[]>("http://localhost:4000/categories");
-//         setCategories(result.data);
-//       } catch (error) {
-//         console.error("Erreur lors du chargement des catégories :", error);
-//         alert("Erreur lors du chargement des catégories");
-//       }
-//     };
-
-//     fetchCategories();
-//   }, []);
-
-//   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-//     e.preventDefault();
-
-//     const form = e.currentTarget;
-//     const formData = new FormData(form);
-//     const formJson = Object.fromEntries(formData.entries());
-//     console.log(" Données du formulaire :", formJson);
-
-//     try {
-//       const response = await axios.post("http://localhost:4000/ads", formJson);
-//       console.log(" Annonce envoyée :", response.data);
-//       alert("Annonce envoyée avec succès !");
-//       form.reset(); // reset del formulario
-//     } catch (error) {
-//       console.error(" Erreur lors de l'envoi :", error);
-//       alert("Erreur lors de l'envoi de l'annonce.");
-//     }
-//   };
-
-//   return (
-//     <form onSubmit={handleSubmit}>
-//       <div className="form">
-//         <div><h2>Add a new article</h2></div>
-//         <label>
-//           Title
-//           <input className="text-field" type="text" name="title" required />
-//         </label>
-
-//         <label>
-//           Description
-//           <input className="text-field" type="text" name="description" required />
-//         </label>
-
-//         <label>
-//           Owner
-//           <input className="text-field" type="text" name="owner" required />
-//         </label>
-
-//         <label>
-//           Picture
-//           <input className="text-field" type="text" name="picture" />
-//         </label>
-
-//         <label>
-//           Location
-//           <input className="text-field" type="text" name="location" required />
-//         </label>
-
-//         <label>
-//           Price
-//           <input className="text-field" type="number" name="price" required />
-//         </label>
-
-//         <label>
-//           Category
-//           <select name="category" required>
-//             <option value="">-- Choisir une catégorie --</option>
-//             {categories.map((category) => (
-//               <option key={category.id} value={category.id}>
-//                 {category.name}
-//               </option>
-//             ))}
-//           </select>
-//         </label>
-
-//         <button className="button" type="submit">Submit</button>
-//       </div>
-//     </form>
-//   );
-// };
-
 /*********** *********************/
 // EJEMPLO CON USE FORM
 import axios from "axios";
@@ -101,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from 'react-toastify';
 import { Category } from "../types";
+import { Tags } from "../types";
 
 
 type FormValues = {
@@ -111,10 +16,12 @@ type FormValues = {
   location: string;
   price: number;
   categoryId: string;
+  tagsId: number[];
 };
 
 export const NewAdForm = () => {
   const [categories, setCategories] = useState<Category[]>([]);
+  const [tags, setTags] = useState<Tags[]>([]);
 
   const {
     register,
@@ -134,7 +41,18 @@ export const NewAdForm = () => {
       }
     };
 
+    const fetchTags = async () => {
+      try {
+        const result = await axios.get<Tags[]>("http://localhost:4000/tags");
+        setTags(result.data);
+      } catch (error) {
+        console.error("Erreur lors du chargement des tags :", error);
+        toast.error("Erreur lors du chargement des tags");
+      }
+    };
+
     fetchCategories();
+    fetchTags();
   }, []);
 
   const onSubmit = async (data: FormValues) => {
@@ -228,6 +146,22 @@ export const NewAdForm = () => {
             ))}
           </select>
           {errors.categoryId && <p>{errors.categoryId.message}</p>}
+        </label>
+
+        <label>
+          Tags
+          <div className="checkbox-group">
+            {tags.map((tag) => (
+              <label key={tag.id}>
+                <input
+                  type="checkbox"
+                  value={tag.id}
+                  {...register("tagsId")}
+                />
+                {tag.name}
+              </label>
+            ))}
+          </div>
         </label>
 
         <button className="button" type="submit">Submit</button>

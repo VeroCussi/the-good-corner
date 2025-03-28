@@ -17,3 +17,8 @@ export type AdCardProps = {
     price: number, 
     link: string
 };
+
+export type Tags = {
+  id: number;
+  name: string;
+};

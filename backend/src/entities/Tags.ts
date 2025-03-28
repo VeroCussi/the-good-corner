@@ -2,6 +2,7 @@ import {
     BaseEntity, 
     Column, Entity, 
     ManyToOne, 
+    ManyToMany,
     OneToMany, 
     PrimaryGeneratedColumn 
   } from "typeorm";
@@ -15,8 +16,11 @@ import {
     @Column({ length: 100 })
     name: string;
 
-    // Relación: Un tag puede tener muchos anuncios
-      @OneToMany(() => Ad, ad => ad.tags)
-      ads: Tags[];
+  // Relación: Un tag puede tener muchos anuncios
+    // @OneToMany(() => Ad, ad => ad.tags)
+    // ads: Tags[];
+
+    @ManyToMany(() => Ad, ad => ad.tags)
+    ads: Ad[];
 
   }

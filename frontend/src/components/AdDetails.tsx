@@ -1,6 +1,10 @@
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 type Ad = {
   id: number;
@@ -11,13 +15,14 @@ type Ad = {
   location: string;
   owner: string;
   category?: { name: string };
-  tags?: { name: string };
+  tags: { id: number; name: string }[];
 };
 
 export const AdDetails = () => {
   const { id } = useParams();
   const [ad, setAd] = useState<Ad | null>(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchAd = async () => {
@@ -36,6 +41,51 @@ export const AdDetails = () => {
 
   if (loading) return <p>Chargement de l'annonce...</p>;
   if (!ad) return <p>Annonce introuvable.</p>;
+
+  // version con alert (funciona
+  // const handleDelete = async () => {
+  //   const confirm = window.confirm("Es-tu sûre de vouloir supprimer cette annonce ?");
+  //   if (!confirm) return;
+  
+  //   try {
+  //     await axios.delete(`http://localhost:4000/ads/${id}`);
+  //     toast.success("Annonce supprimée avec succès !");
+  //     navigate("/");
+  //   } catch (error) {
+  //     console.error("Erreur lors de la suppression :", error);
+  //     toast.error("Erreur lors de la suppression de l'annonce.");
+  //   }
+  // };
+
+  // version con toast
+  const handleDelete = () => {
+    toast(
+      ({ closeToast }) => (
+        <div>
+          <p>Es-tu sûre de vouloir supprimer cette annonce ?</p>
+          <button
+            onClick={async () => {
+              try {
+                await axios.delete(`http://localhost:4000/ads/${id}`);
+                toast.success("Annonce supprimée avec succès !");
+                navigate("/");
+                closeToast();
+              } catch (error) {
+                console.error("Erreur lors de la suppression :", error);
+                toast.error("Erreur lors de la suppression de l'annonce.");
+                closeToast();
+              }
+            }}
+            style={{ marginRight: "10px" }}
+          >
+            Oui
+          </button>
+          <button onClick={closeToast}>Non</button>
+        </div>
+      ),
+      { autoClose: false }
+    );
+  };
 
   return (
     <div className="main-content">
@@ -62,7 +112,7 @@ export const AdDetails = () => {
               xmlns="http://www.w3.org/2000/svg"
               className="styled__BaseIcon-sc-1jsm4qr-0 llmHhT"
               stroke= "currentcolor"
-              stroke-width= "2.5"
+              strokeWidth= "2.5"
               fill= "none"
             >
               <path
@@ -75,7 +125,15 @@ export const AdDetails = () => {
           </div>
         
           {ad.category && <p><strong>Catégorie :</strong> {ad.category.name}</p>}
-          {ad.tags && <p><strong>Tag :</strong> {ad.tags.name}</p>}
+          {ad.tags && ad.tags.length > 0 && (
+            <p>
+              <strong>Tags :</strong> {ad.tags.map(tag => tag.name).join(", ")}
+            </p>
+          )}
+
+          <button className="button button-danger" onClick={handleDelete}>
+            Supprimer l'annonce
+          </button>
           
       </section>
     </div>

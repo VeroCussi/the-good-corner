@@ -8,9 +8,11 @@ import { NewAdForm } from './pages/NewAdForm'
 import { CategoryPage } from './pages/CategoryPage'
 import { NewCategoryForm } from './pages/NewCategoryForm'
 import { NewTagForm } from './pages/NewTagForm'
+import { SearchResults } from './pages/SearchResults'
 
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+
 
 function App() {
   
@@ -25,6 +27,7 @@ function App() {
         <Route path="/category/:id" element={<CategoryPage />} />
         <Route path="/category/new" element={<NewCategoryForm />} />
         <Route path="/tags/new" element={<NewTagForm />} />
+        <Route path="/search" element={<SearchResults />} />
       </Route>
     </Routes>
     <ToastContainer 

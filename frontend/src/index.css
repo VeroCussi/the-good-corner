@@ -241,3 +241,16 @@ select:focus {
   background-color: lightgray;
   border: none;
 }
+
+.button-danger {
+  background-color: #e63946;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+.button-danger:hover {
+  background-color: #d62828;
+}
