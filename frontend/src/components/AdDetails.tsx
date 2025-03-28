@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -41,21 +42,6 @@ export const AdDetails = () => {
 
   if (loading) return <p>Chargement de l'annonce...</p>;
   if (!ad) return <p>Annonce introuvable.</p>;
-
-  // version con alert (funciona
-  // const handleDelete = async () => {
-  //   const confirm = window.confirm("Es-tu sûre de vouloir supprimer cette annonce ?");
-  //   if (!confirm) return;
-  
-  //   try {
-  //     await axios.delete(`http://localhost:4000/ads/${id}`);
-  //     toast.success("Annonce supprimée avec succès !");
-  //     navigate("/");
-  //   } catch (error) {
-  //     console.error("Erreur lors de la suppression :", error);
-  //     toast.error("Erreur lors de la suppression de l'annonce.");
-  //   }
-  // };
 
   // version con toast
   const handleDelete = () => {
@@ -134,6 +120,9 @@ export const AdDetails = () => {
           <button className="button button-danger" onClick={handleDelete}>
             Supprimer l'annonce
           </button>
+          <Link to={`/ad/edit/${ad.id}`} className="button">
+            Modifier l'annonce
+          </Link>
           
       </section>
     </div>

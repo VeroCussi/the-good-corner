@@ -21,7 +21,7 @@ type FormValues = {
   tagsId: number[];
 };
 
-export const NewAdForm = () => {
+export const EditAdForm = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [tags, setTags] = useState<Tags[]>([]);
   const { id } = useParams();
