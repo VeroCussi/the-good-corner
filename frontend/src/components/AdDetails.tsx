@@ -81,12 +81,13 @@ export const AdDetails = () => {
           <img className="ad-details-image" src={ad.picture} alt={ad.title}  />
         </div>
         <div className="ad-details-info">
-          <p className="ad-details-price"><strong>Prix :</strong> {ad.price} €</p>
-          <p className="ad-details-description"><strong>Description :</strong> {ad.description}</p>
-          
-          <hr className="separator" />
-          
           <p className="ad-details-owner"><strong>Propriétaire :</strong> {ad.owner}</p>
+          <p className="ad-details-description"><strong>Description :</strong> {ad.description}</p>
+          <p className="ad-details-price"><strong>Prix :</strong> {ad.price} €</p>
+          <p><strong>Lieu :</strong> {ad.location}</p>
+
+          <hr className="separator" />
+       
           <a
             href={ad.owner}
             className="button button-primary link-button"
@@ -107,7 +108,8 @@ export const AdDetails = () => {
             </svg>
             Envoyer un email</a
           >
-          <p><strong>Lieu :</strong> {ad.location}</p>
+        
+          
           </div>
         
           {ad.category && <p><strong>Catégorie :</strong> {ad.category.name}</p>}
@@ -116,14 +118,15 @@ export const AdDetails = () => {
               <strong>Tags :</strong> {ad.tags.map(tag => tag.name).join(", ")}
             </p>
           )}
-
+        
           <button className="button button-danger" onClick={handleDelete}>
             Supprimer l'annonce
           </button>
+
           <Link to={`/ad/edit/${ad.id}`} className="button">
             Modifier l'annonce
           </Link>
-          
+        
       </section>
     </div>
   );

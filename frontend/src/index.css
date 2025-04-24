@@ -249,8 +249,14 @@ select:focus {
   padding: 0.6rem 1rem;
   border-radius: 5px;
   cursor: pointer;
-  margin-top: 1rem;
 }
 .button-danger:hover {
   background-color: #d62828;
+}
+
+.ad-details-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  margin-top: 1rem;
 }

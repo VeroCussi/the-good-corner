@@ -1,5 +1,3 @@
-/*********** *********************/
-// EJEMPLO CON USE FORM
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -7,8 +5,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { Category } from "../types";
 import { Tags } from "../types";
-
-
 
 type FormValues = {
   title: string;
@@ -25,7 +21,7 @@ export const EditAdForm = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [tags, setTags] = useState<Tags[]>([]);
   const { id } = useParams();
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
 
   const {
@@ -209,3 +205,5 @@ const navigate = useNavigate();
     </form>
   );
 };
+
+

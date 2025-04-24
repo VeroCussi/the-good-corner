@@ -190,17 +190,15 @@ app.put("/category/:id", async (req, res) => {
 // UPDATE tags
 app.put("/tags/:id", async (req, res) => {
   try {
-    // récuprére les données du body & l'id
+    
     const body = req.body;
     const id = Number.parseInt(req.params.id);
 
-    //met a jour l'article en fonction des informations du body
     await Ad.update({ id: id }, body);
 
-    //message reponse
     res.status(200).send("article modifié avec succès");
   } catch (error) {
-    //renvoyer un message eurreur
+    
     res.status(500).send("erreur lors de la modification de l'article");
   }
 });
