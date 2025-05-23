@@ -14,7 +14,7 @@ export const Home: React.FC = () => {
     sortOrder: 'DESC'
   });
 
-  const { loading, error, data, refetch } = useQuery(
+  const { loading, error, data } = useQuery(
     searchInput.query || searchInput.categoryId || searchInput.tagIds?.length || searchInput.minPrice || searchInput.maxPrice
       ? SEARCH_ADS
       : GET_ALL_ADS,

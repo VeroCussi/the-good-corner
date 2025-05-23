@@ -6,7 +6,7 @@ export const Header = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate(); 
 
-  const { data, loading, error } = useGetAllCategoriesQuery();
+  const { data } = useGetAllCategoriesQuery();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();

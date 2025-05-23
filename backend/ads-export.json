@@ -1,0 +1,332 @@
+[
+  {
+    "id": 1,
+    "title": "Napalm",
+    "description": "Ca prend bien feu =)",
+    "owner": "Loic",
+    "price": 42,
+    "createdAt": "2025-04-24T13:41:26.000Z",
+    "picture": "https://media.istockphoto.com/id/113494458/fr/photo/feu-isol%C3%A9-sur-fond-noir.webp?s=2048x2048&w=is&k=20&c=kV1FR11TJ6AUWIh-6-KoHRVDlQWr0LCC511TuHGilY8=",
+    "location": "Lille",
+    "category": {
+      "id": 1,
+      "title": "Misc."
+    },
+    "tags": [
+      {
+        "id": 1,
+        "title": "Blue"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "",
+    "description": "",
+    "owner": "",
+    "price": 42,
+    "createdAt": "2025-04-24T13:46:43.000Z",
+    "picture": "",
+    "location": "",
+    "category": {
+      "id": 1,
+      "title": "Misc."
+    },
+    "tags": []
+  },
+  {
+    "id": 3,
+    "title": "",
+    "description": "",
+    "owner": "",
+    "price": 42,
+    "createdAt": "2025-04-24T13:50:20.000Z",
+    "picture": "",
+    "location": "",
+    "category": {
+      "id": 1,
+      "title": "Misc."
+    },
+    "tags": [
+      {
+        "id": 1,
+        "title": "Blue"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "title": "",
+    "description": "",
+    "owner": "",
+    "price": 42,
+    "createdAt": "2025-04-24T14:04:59.000Z",
+    "picture": "",
+    "location": "",
+    "category": {
+      "id": 1,
+      "title": "Misc."
+    },
+    "tags": [
+      {
+        "id": 1,
+        "title": "Blue"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "title": "sdfgdsfgsdfgdsfg",
+    "description": "lorem ipsum",
+    "owner": "loic",
+    "price": 1,
+    "createdAt": "2025-04-24T14:05:33.000Z",
+    "picture": "",
+    "location": "sdgf",
+    "category": {
+      "id": 1,
+      "title": "Misc."
+    },
+    "tags": [
+      {
+        "id": 1,
+        "title": "Blue"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "title": "",
+    "description": "",
+    "owner": "",
+    "price": 42,
+    "createdAt": "2025-04-24T14:06:23.000Z",
+    "picture": "",
+    "location": "",
+    "category": {
+      "id": 1,
+      "title": "Misc."
+    },
+    "tags": [
+      {
+        "id": 1,
+        "title": "Blue"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "title": "",
+    "description": "",
+    "owner": "",
+    "price": 42,
+    "createdAt": "2025-04-24T14:13:42.000Z",
+    "picture": "",
+    "location": "",
+    "category": {
+      "id": 1,
+      "title": "Misc."
+    },
+    "tags": [
+      {
+        "id": 1,
+        "title": "Blue"
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "title": "",
+    "description": "",
+    "owner": "",
+    "price": 42,
+    "createdAt": "2025-04-24T14:14:16.000Z",
+    "picture": "",
+    "location": "",
+    "category": {
+      "id": 1,
+      "title": "Misc."
+    },
+    "tags": [
+      {
+        "id": 1,
+        "title": "Blue"
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "title": "",
+    "description": "",
+    "owner": "",
+    "price": 42,
+    "createdAt": "2025-04-24T14:15:28.000Z",
+    "picture": "",
+    "location": "",
+    "category": {
+      "id": 1,
+      "title": "Misc."
+    },
+    "tags": [
+      {
+        "id": 1,
+        "title": "Blue"
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "title": "",
+    "description": "",
+    "owner": "",
+    "price": 42,
+    "createdAt": "2025-04-24T14:16:06.000Z",
+    "picture": "",
+    "location": "",
+    "category": {
+      "id": 1,
+      "title": "Misc."
+    },
+    "tags": [
+      {
+        "id": 1,
+        "title": "Blue"
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "title": "",
+    "description": "",
+    "owner": "",
+    "price": 42,
+    "createdAt": "2025-04-24T14:20:51.000Z",
+    "picture": "",
+    "location": "",
+    "category": {
+      "id": 1,
+      "title": "Misc."
+    },
+    "tags": [
+      {
+        "id": 1,
+        "title": "Blue"
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "title": "",
+    "description": "",
+    "owner": "",
+    "price": 42,
+    "createdAt": "2025-04-24T14:26:07.000Z",
+    "picture": "",
+    "location": "",
+    "category": {
+      "id": 1,
+      "title": "Misc."
+    },
+    "tags": [
+      {
+        "id": 1,
+        "title": "Blue"
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "title": "",
+    "description": "",
+    "owner": "",
+    "price": 42,
+    "createdAt": "2025-04-24T14:27:19.000Z",
+    "picture": "",
+    "location": "",
+    "category": {
+      "id": 1,
+      "title": "Misc."
+    },
+    "tags": [
+      {
+        "id": 1,
+        "title": "Blue"
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "title": "Car",
+    "description": "testing",
+    "owner": "moi",
+    "price": 42,
+    "createdAt": "2025-04-24T14:28:04.000Z",
+    "picture": "https://www.automobile-magazine.fr/asset/cms/34973/config/28294/apres-plusieurs-prototypes-la-bollore-bluecar-a-fini-par-devoiler-sa-version-definitive.jpg",
+    "location": "Paris",
+    "category": {
+      "id": 1,
+      "title": "Misc."
+    },
+    "tags": [
+      {
+        "id": 1,
+        "title": "Blue"
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "title": "Stuff",
+    "description": "cool stuff",
+    "owner": "moi",
+    "price": 4298,
+    "createdAt": "2025-04-24T14:32:28.000Z",
+    "picture": "https://picsum.photos/203",
+    "location": "Paris (75)",
+    "category": {
+      "id": 2,
+      "title": "Second Hand"
+    },
+    "tags": [
+      {
+        "id": 2,
+        "title": "Red"
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "title": "Car",
+    "description": "Car blue",
+    "owner": "moi",
+    "price": 10011,
+    "createdAt": "2025-05-23T09:02:06.000Z",
+    "picture": "https://picsum.photos/207",
+    "location": "Paris",
+    "category": {
+      "id": 1,
+      "title": "Misc."
+    },
+    "tags": []
+  },
+  {
+    "id": 26,
+    "title": "Picture",
+    "description": "testing",
+    "owner": "moi",
+    "price": 98,
+    "createdAt": "2025-05-23T09:02:38.000Z",
+    "picture": "https://picsum.photos/200",
+    "location": "Paris",
+    "category": {
+      "id": 1,
+      "title": "Misc."
+    },
+    "tags": [
+      {
+        "id": 1,
+        "title": "Blue"
+      }
+    ]
+  }
+]

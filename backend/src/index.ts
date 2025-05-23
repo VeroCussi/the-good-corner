@@ -263,7 +263,11 @@ async function startServer() {
 
   // Basic security middleware
   app.use(cors({
-    origin: process.env.FRONTEND_URL || "http://localhost:5173",
+    origin: [
+      "http://localhost:3000",  // Docker frontend
+      "http://localhost:5173",  // Vite dev server
+      process.env.FRONTEND_URL || "http://localhost:5173"
+    ].filter(Boolean),
     credentials: true
   }));
   app.use(json());

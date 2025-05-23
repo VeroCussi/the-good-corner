@@ -43,7 +43,7 @@ export const NewAdForm = () => {
   useEffect(() => {
     if (isEditing && adData?.getAd) {
       const ad = adData.getAd;
-      const tagsIds = ad.tags?.map((tag) => tag.id) || [];
+      const tagsIds = ad.tags?.map((tag) => tag.id.toString()) || [];
       
       reset({
         title: ad.title,
@@ -80,8 +80,8 @@ export const NewAdForm = () => {
         picture: data.picture,
         location: data.location,
         price: data.price,
-        category: parseFloat(data.categoryId),
-        tags: tagsArray.map(tagId => parseFloat(tagId.toString()))
+        category: data.categoryId,
+        tags: tagsArray.map(tagId => tagId.toString())
       };
 
       console.log("adInput final:", adInput);

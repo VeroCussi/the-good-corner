@@ -73,8 +73,8 @@ export const EditAdForm = () => {
         picture: data.picture,
         location: data.location,
         price: data.price,
-        category: parseFloat(data.category),
-        tags: data.tags
+        category: data.category,
+        tags: data.tags.map(tagId => tagId.toString())
       };
 
       if (isEditing) {
