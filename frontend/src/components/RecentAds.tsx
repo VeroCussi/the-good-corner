@@ -1,48 +1,42 @@
-// Version con map
-import { useEffect, useState } from "react";
-import { AdCard } from "./AdCard"
-import axios from "axios";
-import { toast } from 'react-toastify';
-import { AdCardProps } from "../types";
+// Hooks & States
+import { useState } from 'react'
 
-export const RecentAds = () => {
-  const [total, setTotal] = useState(0);
-  const [ads, setAds] = useState<AdCardProps[]>([]);
-  const fetchAds = async () => {
-    try {
-      const response = await axios.get("http://localhost:4000/ads");
-      setAds(response.data);
-    } catch (error) {
-      console.error("Error fetching ads:", error);
-      toast.error("Error fetching ads");
-    }
-  };
+// GraphQL
+import {useGetAllAdsQuery} from "../../generated/graphql-types.ts";
 
-  useEffect(() => {
-    fetchAds();
-  }, []);
+// Components
+import { AdCard } from '../components/AdCard.tsx';
 
-  return (
-    <>
-      <h2>Annonces récentes</h2>
-      <p>Total: {total} €</p>
-      <section className="recent-ads">
-      {ads.map( ad => (
-        <div key={ad.id}>
-          <AdCard
-            id={ad.id}
-            title={ad.title}
-            picture={ad.picture}
-            price={ad.price}
-            link={`/ad/${ad.id}`}
-          />
-          <button 
-          className="button"
-          onClick={() => setTotal(total + ad.price)}
-          >Add price to total</button>
-          </div>
-        ))}
-      </section>
-    </>
-  );
-};
+
+export default function RecentAds() {
+    const [ total, setTotal ] = useState(0)
+
+    const { data, loading, error } = useGetAllAdsQuery();
+
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error :(</p>;
+
+    return (
+        <>
+            <main className="main-content">
+                <h2>Annonces récentes</h2>
+                <h3>Total: {total} €</h3>
+                <section className="recent-ads">
+                    {data?.getAllAds.map((ad) => (
+                        <div key={ad.id}>
+                            <AdCard
+                                id={ad.id}
+                                title={ad.title}
+                                picture={ad.picture}
+                                price={ad.price}
+                                link={`/ad/${ad.id}`} />
+                                <button className='button' onClick={() => setTotal(total + ad.price)}>
+                                    Ajouter le prix au total
+                                </button>
+                        </div>
+                    ))}
+                </section>
+            </main>
+        </>
+    )
+}

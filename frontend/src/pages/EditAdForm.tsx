@@ -1,10 +1,14 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
-import { Category } from "../types";
-import { Tags } from "../types";
+import { 
+  useGetAllCategoriesQuery, 
+  useGetAllTagsQuery, 
+  useGetAdQuery,
+  useCreateAdMutation,
+  useUpdateAdMutation 
+} from "../../generated/graphql-types";
 
 type FormValues = {
   title: string;
@@ -13,16 +17,26 @@ type FormValues = {
   picture: string;
   location: string;
   price: number;
-  categoryId: string;
-  tagsId: number[];
+  category: string;
+  tags: number[];
 };
 
 export const EditAdForm = () => {
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [tags, setTags] = useState<Tags[]>([]);
   const { id } = useParams();
   const navigate = useNavigate();
+  const isEditing = !!id;
 
+  // GraphQL queries
+  const { data: categoriesData, loading: categoriesLoading } = useGetAllCategoriesQuery();
+  const { data: tagsData, loading: tagsLoading } = useGetAllTagsQuery();
+  const { data: adData, loading: adLoading } = useGetAdQuery({
+    variables: { id: parseFloat(id!) },
+    skip: !isEditing
+  });
+
+  // GraphQL mutations
+  const [createAd] = useCreateAdMutation();
+  const [updateAd] = useUpdateAdMutation();
 
   const {
     register,
@@ -31,71 +45,55 @@ export const EditAdForm = () => {
     formState: { errors },
   } = useForm<FormValues>();
 
+  // Load ad data when editing
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const result = await axios.get<Category[]>("http://localhost:4000/categories");
-        setCategories(result.data);
-      } catch (error) {
-        console.error("Erreur lors du chargement des catégories :", error);
-        toast.error("Erreur lors du chargement des catégories");
-      }
-    };
-
-    const fetchTags = async () => {
-      try {
-        const result = await axios.get<Tags[]>("http://localhost:4000/tags");
-        setTags(result.data);
-      } catch (error) {
-        console.error("Erreur lors du chargement des tags :", error);
-        toast.error("Erreur lors du chargement des tags");
-      }
-    };
-
-    const fetchAd = async () => {
-      if (!id) return;
-      try {
-        const response = await axios.get(`http://localhost:4000/ads/${id}`);
-        const ad = response.data;
-  
-        reset({
-          title: ad.title,
-          description: ad.description,
-          owner: ad.owner,
-          picture: ad.picture,
-          location: ad.location,
-          price: ad.price,
-          categoryId: ad.category?.id.toString(),
-          tagsId: ad.tags?.map((tag: any) => tag.id) || [],
-        });
-      } catch (error) {
-        console.error("Erreur lors du chargement de l'annonce :", error);
-        toast.error("Erreur lors du chargement de l'annonce");
-      }
-    };
-
-    fetchCategories();
-    fetchTags();
-    fetchAd();
-  }, [id, reset]);
+    if (isEditing && adData?.getAd) {
+      const ad = adData.getAd;
+      reset({
+        title: ad.title,
+        description: ad.description,
+        owner: ad.owner,
+        picture: ad.picture,
+        location: ad.location,
+        price: ad.price,
+        category: ad.category?.id.toString() || "",
+        tags: ad.tags?.map((tag) => tag.id) || [],
+      });
+    }
+  }, [adData, isEditing, reset]);
 
   const onSubmit = async (data: FormValues) => {
-    console.log(" Données du formulaire :", data);
+    console.log("Données du formulaire :", data);
   
     try {
-      let response;
-  
-      if (id) {
-        // Modo edición 
-        response = await axios.put(`http://localhost:4000/ads/${id}`, data);
+      const adInput = {
+        title: data.title,
+        description: data.description,
+        owner: data.owner,
+        picture: data.picture,
+        location: data.location,
+        price: data.price,
+        category: parseFloat(data.category),
+        tags: data.tags
+      };
+
+      if (isEditing) {
+        // Mode édition
+        await updateAd({
+          variables: { 
+            id: parseFloat(id!), 
+            data: adInput 
+          }
+        });
         toast.success("Annonce modifiée avec succès !");
       } else {
-        // Modo creación
-        response = await axios.post("http://localhost:4000/ads", data);
+        // Mode création
+        await createAd({
+          variables: { data: adInput }
+        });
         toast.success("Annonce envoyée avec succès !");
       }
-  
-      console.log("Réponse :", response.data);
+
       reset();
       navigate("/");
     } catch (error) {
@@ -103,13 +101,19 @@ export const EditAdForm = () => {
       toast.error("Erreur lors de l'envoi de l'annonce.");
     }
   };
-  
+
+  if (categoriesLoading || tagsLoading || (isEditing && adLoading)) {
+    return <p>Chargement...</p>;
+  }
+
+  const categories = categoriesData?.getAllCategories || [];
+  const tags = tagsData?.getAllTags || [];
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="form">
         <div>
-          <h2>Add a new article</h2>
+          <h2>{isEditing ? 'Modifier l\'annonce' : 'Ajouter une nouvelle annonce'}</h2>
         </div>
 
         <label>
@@ -173,15 +177,15 @@ export const EditAdForm = () => {
 
         <label>
           Category
-          <select {...register("categoryId", { required: "Category is required" })}>
+          <select {...register("category", { required: "Category is required" })}>
             <option value="">-- Choisir une catégorie --</option>
-            {categories.map((categoryId) => (
-              <option key={categoryId.id} value={categoryId.id}>
-                {categoryId.name}
+            {categories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.title}
               </option>
             ))}
           </select>
-          {errors.categoryId && <p>{errors.categoryId.message}</p>}
+          {errors.category && <p>{errors.category.message}</p>}
         </label>
 
         <label>
@@ -192,15 +196,17 @@ export const EditAdForm = () => {
                 <input
                   type="checkbox"
                   value={tag.id}
-                  {...register("tagsId")}
+                  {...register("tags")}
                 />
-                {tag.name}
+                {tag.title}
               </label>
             ))}
           </div>
         </label>
 
-        <button className="button" type="submit">Submit</button>
+        <button className="button" type="submit">
+          {isEditing ? 'Modifier' : 'Créer'}
+        </button>
       </div>
     </form>
   );

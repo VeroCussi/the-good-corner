@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
-    "@types/express": "^5.0.0",
+    "@types/express": "4.17.21",
     "@types/sqlite3": "^3.1.11",
     "ts-node-dev": "^2.0.0"
   }

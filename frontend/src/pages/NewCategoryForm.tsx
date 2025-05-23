@@ -1,13 +1,16 @@
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { useCreateCategoryMutation } from "../../generated/graphql-types";
 
 type CategoryFormData = {
-  name: string;
-  description: string;
+  title: string;
 };
 
 export const NewCategoryForm = () => {
+  const navigate = useNavigate();
+  const [createCategory] = useCreateCategoryMutation();
+
   const {
     register,
     handleSubmit,
@@ -17,10 +20,16 @@ export const NewCategoryForm = () => {
 
   const onSubmit = async (data: CategoryFormData) => {
     try {
-      const res = await axios.post("http://localhost:4000/categories", data);
+      await createCategory({
+        variables: {
+          data: {
+            title: data.title
+          }
+        }
+      });
       toast.success("Catégorie créée avec succès !");
-      console.log("Catégorie créée :", res.data);
       reset();
+      navigate("/");
     } catch (error) {
       console.error("Erreur lors de la création :", error);
       toast.error("Erreur lors de la création de la catégorie");
@@ -33,23 +42,13 @@ export const NewCategoryForm = () => {
       <h2>Créer une nouvelle catégorie</h2>
 
       <label>
-        Nom
+        Nom de la catégorie
         <input
           className="text-field"
           type="text"
-          {...register("name", { required: "Le nom est requis" })}
+          {...register("title", { required: "Le nom de la catégorie est requis" })}
         />
-        {errors.name && <p>{errors.name.message}</p>}
-      </label>
-
-      <label>
-        Description
-        <input
-          className="text-field"
-          type="text"
-          {...register("description", { required: "La description est requise" })}
-        />
-        {errors.description && <p>{errors.description.message}</p>}
+        {errors.title && <p>{errors.title.message}</p>}
       </label>
 
       <button type="submit" className="button">Créer la catégorie</button>

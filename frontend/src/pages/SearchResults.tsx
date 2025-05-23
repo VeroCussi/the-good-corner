@@ -1,28 +1,22 @@
 import { useSearchParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import axios from "axios";
 import { AdCard } from "../components/AdCard";
-import { AdCardProps } from "../types";
+import { useSearchAdsQuery } from "../../generated/graphql-types";
 
 export const SearchResults = () => {
   const [searchParams] = useSearchParams();
-  const query = searchParams.get("query");
-  const [results, setResults] = useState<AdCardProps[]>([]);
+  const query = searchParams.get("query") || "";
+  
+  const { data, loading, error } = useSearchAdsQuery({
+    variables: { 
+      searchInput: { query }
+    },
+    skip: !query
+  });
 
-  useEffect(() => {
-    const fetchResults = async () => {
-        if (!query) return;
+  if (loading) return <p>Recherche en cours...</p>;
+  if (error) return <p>Erreur lors de la recherche : {error.message}</p>;
 
-      try {
-        const response = await axios.get(`http://localhost:4000/ads/search?query=${query}`);
-        setResults(response.data);
-      } catch (error) {
-        console.error("Erreur lors de la recherche :", error);
-      }
-    };
-
-    fetchResults();
-  }, [query]);
+  const results = data?.searchAds || [];
 
   return (
     <div className="search-results">
@@ -30,11 +24,6 @@ export const SearchResults = () => {
       {results.length === 0 ? (
         <p>Aucune annonce trouvée.</p>
       ) : (
-        // <ul>
-        //   {results.map((ad: any) => (
-        //     <li key={ad.id}>{ad.title} – {ad.price} €</li>
-        //   ))}
-        // </ul>
         <div className="ad-list">
         {results.map((ad) => (
             <AdCard

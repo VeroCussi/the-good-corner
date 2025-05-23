@@ -1,13 +1,16 @@
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { useCreateTagMutation } from "../../generated/graphql-types";
 
 type TagFormData = {
-  name: string;
-  description: string;
+  title: string;
 };
 
 export const NewTagForm = () => {
+  const navigate = useNavigate();
+  const [createTag] = useCreateTagMutation();
+
   const {
     register,
     handleSubmit,
@@ -17,10 +20,16 @@ export const NewTagForm = () => {
 
   const onSubmit = async (data: TagFormData) => {
     try {
-      const res = await axios.post("http://localhost:4000/tags", data);
+      await createTag({
+        variables: {
+          data: {
+            title: data.title
+          }
+        }
+      });
       toast.success("Tag créé avec succès !");
-      console.log("Tag créé :", res.data);
       reset();
+      navigate("/");
     } catch (error) {
       console.error("Erreur lors de la création du tag :", error);
       toast.error("Erreur lors de la création du tag");
@@ -33,23 +42,13 @@ export const NewTagForm = () => {
       <h2>Créer un nouveau tag</h2>
 
       <label>
-        Nom
+        Nom du tag
         <input
           className="text-field"
           type="text"
-          {...register("name", { required: "Le nom du tag est requis" })}
+          {...register("title", { required: "Le nom du tag est requis" })}
         />
-        {errors.name && <p>{errors.name.message}</p>}
-      </label>
-
-      <label>
-        Description
-        <input
-          className="text-field"
-          type="text"
-          {...register("description", { required: "La description est requise" })}
-        />
-        {errors.description && <p>{errors.description.message}</p>}
+        {errors.title && <p>{errors.title.message}</p>}
       </label>
 
       <button type="submit" className="button">Créer le tag</button>

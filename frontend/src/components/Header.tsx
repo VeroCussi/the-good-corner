@@ -1,33 +1,18 @@
-import { Link } from 'react-router';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from "react-router-dom";
-import { Category } from '../types';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useGetAllCategoriesQuery } from '../../generated/graphql-types';
 
 export const Header = () => {
-  const [categories, setCategories] = useState<Category[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate(); 
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const result = await axios.get<Category[]>("http://localhost:4000/categories");
-        setCategories(result.data);
-      } catch (error) {
-        console.error("Erreur lors du chargement des catégories");
-      }
-    };
-
-    fetchCategories();
-  }, []);
+  const { data, loading, error } = useGetAllCategoriesQuery();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchTerm.trim() === "") return;
     navigate(`/search?query=${encodeURIComponent(searchTerm)}`);
   };
-
 
   return (
     <header className="header">
@@ -98,12 +83,12 @@ export const Header = () => {
 
         {/* Navegación por categorías */}
       <nav className="categories-navigation">
-        {categories.map((category, index) => (
+        {data?.getAllCategories.map((category, index) => (
           <span key={category.id}>
             <Link to={`/category/${category.id}`} className="category-navigation-link">
-              {category.name}
+              {category.title}
             </Link>
-            {index < categories.length - 1 && " • "}
+            {index < data.getAllCategories.length - 1 && " • "}
           </span>
         ))}
       </nav>

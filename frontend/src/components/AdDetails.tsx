@@ -1,47 +1,26 @@
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { toast } from 'react-toastify';
+import { useGetAdQuery, useDeleteAdMutation } from "../../generated/graphql-types";
 import 'react-toastify/dist/ReactToastify.css';
-
-
-type Ad = {
-  id: number;
-  title: string;
-  description: string;
-  price: number;
-  picture: string;
-  location: string;
-  owner: string;
-  category?: { name: string };
-  tags: { id: number; name: string }[];
-};
 
 export const AdDetails = () => {
   const { id } = useParams();
-  const [ad, setAd] = useState<Ad | null>(null);
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchAd = async () => {
-      try {
-        const res = await axios.get(`http://localhost:4000/ads/${id}`);
-        setAd(res.data);
-      } catch (error) {
-        console.error("Erreur lors du chargement de l'annonce :", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchAd();
-  }, [id]);
+  
+  const { data, loading, error } = useGetAdQuery({
+    variables: { id: parseFloat(id!) },
+    skip: !id
+  });
+  
+  const [deleteAd] = useDeleteAdMutation();
 
   if (loading) return <p>Chargement de l'annonce...</p>;
-  if (!ad) return <p>Annonce introuvable.</p>;
+  if (error) return <p>Erreur lors du chargement de l'annonce.</p>;
+  if (!data?.getAd) return <p>Annonce introuvable.</p>;
+
+  const ad = data.getAd;
 
   // version con toast
   const handleDelete = () => {
@@ -52,7 +31,9 @@ export const AdDetails = () => {
           <button
             onClick={async () => {
               try {
-                await axios.delete(`http://localhost:4000/ads/${id}`);
+                await deleteAd({
+                  variables: { id: parseFloat(id!) }
+                });
                 toast.success("Annonce supprimée avec succès !");
                 navigate("/");
                 closeToast();
@@ -89,7 +70,7 @@ export const AdDetails = () => {
           <hr className="separator" />
        
           <a
-            href={ad.owner}
+            href={`mailto:${ad.owner}`}
             className="button button-primary link-button"
             ><svg
               aria-hidden="true"
@@ -112,10 +93,10 @@ export const AdDetails = () => {
           
           </div>
         
-          {ad.category && <p><strong>Catégorie :</strong> {ad.category.name}</p>}
+          {ad.category && <p><strong>Catégorie :</strong> {ad.category.title}</p>}
           {ad.tags && ad.tags.length > 0 && (
             <p>
-              <strong>Tags :</strong> {ad.tags.map(tag => tag.name).join(", ")}
+              <strong>Tags :</strong> {ad.tags.map(tag => tag.title).join(", ")}
             </p>
           )}
         

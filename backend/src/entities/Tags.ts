@@ -1,26 +1,27 @@
-import { 
-    BaseEntity, 
-    Column, Entity, 
-    ManyToOne, 
-    ManyToMany,
-    OneToMany, 
-    PrimaryGeneratedColumn 
-  } from "typeorm";
-  import { Ad } from "./Ad";
-  
-  @Entity()
-  export class Tags extends BaseEntity {
-    @PrimaryGeneratedColumn()
-    id: number;
-  
-    @Column({ length: 100 })
-    name: string;
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import Ad from "./Ad";
+import { Field, ObjectType } from "type-graphql";
 
-  // Relación: Un tag puede tener muchos anuncios
-    // @OneToMany(() => Ad, ad => ad.tags)
-    // ads: Tags[];
+@Entity()
+@ObjectType()
+class Tag extends BaseEntity {
+  @PrimaryGeneratedColumn()
+  @Field()
+  id: number;
 
-    @ManyToMany(() => Ad, ad => ad.tags)
-    ads: Ad[];
+  @Column({ unique: true })
+  @Field()
+  title: string;
 
-  }
+  @ManyToMany(() => Ad, (ad) => ad.tags)
+  @Field(() => [Ad])
+  ads: Ad[];
+}
+
+export default Tag;
