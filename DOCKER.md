@@ -49,6 +49,9 @@ docker-compose logs
 # Ver logs de un servicio específico
 docker-compose logs backend
 docker-compose logs frontend
+
+# Ver estado:
+docker-compose ps
 ```
 
 ### Construir servicios individualmente
