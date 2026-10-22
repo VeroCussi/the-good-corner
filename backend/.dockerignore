@@ -1,4 +1,5 @@
 node_modules
+dist
 npm-debug.log
 .git
 .gitignore
@@ -10,4 +11,8 @@ coverage
 .env.local
 .env.development.local
 .env.test.local
-.env.production.local 
+.env.production.local
+*.sqlite
+*-export.json
+http
+scripts 

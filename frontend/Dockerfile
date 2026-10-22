@@ -1,33 +1,22 @@
-# Multi-stage build for React frontend
-# Stage 1: Build stage
-FROM node:18-alpine as build
+FROM node:22-alpine AS build
 
-# Set the working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json
 COPY package*.json ./
-
-# Install dependencies
 RUN npm ci
 
-# Copy source code
 COPY . .
 
-# Build the app
+ARG VITE_GRAPHQL_URL=http://localhost:4000/graphql
+ENV VITE_GRAPHQL_URL=$VITE_GRAPHQL_URL
+
 RUN npm run build
 
-# Stage 2: Production stage with Nginx
-FROM nginx:alpine
+FROM nginx:1.28-alpine
 
-# Copy built assets from build stage
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /app/dist /usr/share/nginx/html
 
-# Copy custom nginx configuration (optional)
-# COPY nginx.conf /etc/nginx/nginx.conf
-
-# Expose port 80
 EXPOSE 80
 
-# Start nginx
-CMD ["nginx", "-g", "daemon off;"] 
+CMD ["nginx", "-g", "daemon off;"]

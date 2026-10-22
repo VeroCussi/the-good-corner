@@ -1,34 +1,40 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node-dev ./src/index.ts",
-    "export-data": "ts-node ./scripts/export-sqlite-data.ts",
-    "import-data": "ts-node ./scripts/import-to-postgres.ts",
+    "dev": "tsx watch ./src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "export-data": "tsx ./scripts/export-sqlite-data.ts",
+    "import-data": "tsx ./scripts/import-to-postgres.ts",
     "migrate": "npm run export-data && npm run import-data"
+  },
+  "engines": {
+    "node": ">=20"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@apollo/server": "^4.13.0",
-    "cors": "^2.8.5",
-    "express": "^4.21.2",
-    "graphql": "^16.10.0",
-    "graphql-scalars": "^1.24.2",
-    "pg": "^8.13.1",
+    "@apollo/server": "^5.5.1",
+    "@as-integrations/express5": "^1.1.2",
+    "class-validator": "^0.14.3",
+    "cors": "^2.8.6",
+    "express": "^5.3.0",
+    "graphql": "^16.12.0",
+    "graphql-scalars": "^1.26.0",
+    "pg": "^8.23.1",
     "reflect-metadata": "^0.2.2",
-    "sha.js": "^2.4.12",
-    "type-graphql": "^2.0.0-rc.2",
-    "typeorm": "^0.3.26",
-    "typescript": "^5.8.2"
+    "type-graphql": "2.0.0-rc.3",
+    "typeorm": "^0.3.31"
   },
   "devDependencies": {
-    "@types/cors": "^2.8.17",
-    "@types/express": "4.17.21",
-    "@types/pg": "^8.11.10",
-    "ts-node-dev": "^2.0.0"
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/node": "^22.18.0",
+    "@types/pg": "^8.15.5",
+    "tsx": "^4.20.6",
+    "typescript": "~5.9.3"
   }
 }

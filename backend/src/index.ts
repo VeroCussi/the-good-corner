@@ -239,12 +239,11 @@
 
 import "reflect-metadata";
 import { ApolloServer } from "@apollo/server";
-import { expressMiddleware } from "@apollo/server/express4";
+import { expressMiddleware } from "@as-integrations/express5";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
 import express from "express";
 import http from "http";
 import cors from "cors";
-import { json } from "body-parser";
 import { buildSchema } from "type-graphql";
 import dataSource from "./config/db";
 import AdResolver from "./resolvers/AdResolver";
@@ -270,7 +269,7 @@ async function startServer() {
     ].filter(Boolean),
     credentials: true
   }));
-  app.use(json());
+  app.use(express.json());
 
   // Build GraphQL schema
   const schema = await buildSchema({
@@ -291,15 +290,12 @@ async function startServer() {
   // Start server
   await server.start();
 
-  // Apply middleware (correct order and types)
   app.use(
-    '/graphql',
-    express.json(),
+    "/graphql",
     expressMiddleware(server, { context: async () => ({}) })
   );
 
-  // Start listening
-  const port = process.env.PORT || 4000;
+  const port = Number(process.env.PORT) || 4000;
   await new Promise<void>((resolve) => httpServer.listen({ port }, resolve));
   console.log(`🚀 Server ready at http://localhost:${port}/graphql`);
 }

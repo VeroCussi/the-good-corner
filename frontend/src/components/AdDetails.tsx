@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { useGetAdQuery, useDeleteAdMutation } from "../../generated/graphql-types";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/ReactToastify.css";
 
 export const AdDetails = () => {
   const { id } = useParams();

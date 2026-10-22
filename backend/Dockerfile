@@ -1,28 +1,29 @@
-# Use the official Node.js runtime as base image
-FROM node:18-alpine
+FROM node:22-alpine AS builder
 
-# Set the working directory in the container
 WORKDIR /app
 
-# Copy package.json and package-lock.json
 COPY package*.json ./
-
-# Install dependencies (including dev dependencies for ts-node-dev)
 RUN npm ci
 
-# Copy the source code
-COPY . .
+COPY tsconfig.json ./
+COPY src ./src
 
-# Create a non-root user
-RUN addgroup -g 1001 -S nodejs
-RUN adduser -S nodejs -u 1001
+RUN npm run build
 
-# Change ownership of the app directory to nodejs user
+FROM node:22-alpine
+
+WORKDIR /app
+
+RUN addgroup -g 1001 -S nodejs && adduser -S nodejs -u 1001
+
+COPY package*.json ./
+RUN npm ci --omit=dev && npm cache clean --force
+
+COPY --from=builder /app/dist ./dist
+
 RUN chown -R nodejs:nodejs /app
 USER nodejs
 
-# Expose the port the app runs on
 EXPOSE 4000
 
-# Define the command to run the application
-CMD ["npm", "start"] 
+CMD ["node", "dist/index.js"]

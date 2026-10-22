@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres:15
+    image: postgres:16-alpine
     restart: always
     environment:
       POSTGRES_DB: good_corner
@@ -10,6 +10,11 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d good_corner"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     networks:
       - app-network
 
@@ -26,8 +31,10 @@ services:
       - DB_USERNAME=postgres
       - DB_PASSWORD=password
       - DB_NAME=good_corner
+      - FRONTEND_URL=http://localhost:3000
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     networks:
       - app-network
 
@@ -35,6 +42,8 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+      args:
+        VITE_GRAPHQL_URL: http://localhost:4000/graphql
     ports:
       - "3000:80"
     depends_on:
@@ -47,4 +56,4 @@ volumes:
 
 networks:
   app-network:
-    driver: bridge 
+    driver: bridge

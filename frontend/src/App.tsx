@@ -12,7 +12,7 @@ import { SearchResults } from './pages/SearchResults'
 import { EditAdForm } from './pages/EditAdForm'
 
 import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/ReactToastify.css";
 
 
 function App() {
